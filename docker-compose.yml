@@ -1,0 +1,24 @@
+version: "2"
+
+services:
+  drupal_mysqldb:
+    image: mysql:$MYSQL_VERSION
+    container_name: $MYSQL_NAME
+    ports:
+      - "${HOST_MYSQL_PORT}:3306"
+    volumes:
+      - ./db-backups:/var/mysql/backups
+      - ./db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
+    restart: always
+  drupal9_web:
+    build: php74apache
+    container_name: $WEB_NAME
+    volumes:
+      - ./drupal9:/var/www
+    ports:
+     - "${HOST_APACHE_PORT}:80"
