@@ -2,7 +2,7 @@ name: Stable
 type: theme
 description: A default base theme using Drupal 8.0.0's core markup and CSS.
 package: Core
-# version: VERSION
+version: VERSION
 base theme: false
 hidden: true
 
@@ -124,12 +124,6 @@ libraries-override:
     css:
       theme:
         css/image.admin.css: css/image/image.admin.css
-  image/quickedit.inPlaceEditor.image:
-    css:
-      component:
-        css/editors/image.css: css/image/editors/image.css
-      theme:
-        css/editors/image.theme.css: css/image/editors/image.theme.css
 
   language/drupal.language.admin:
     css:
@@ -194,6 +188,12 @@ libraries-override:
       theme:
         css/quickedit.theme.css: css/quickedit/quickedit.theme.css
         css/quickedit.icons.theme.css: css/quickedit/quickedit.icons.theme.css
+  quickedit/quickedit.inPlaceEditor.image:
+    css:
+      component:
+        css/editors/image.css: css/quickedit/editors/image.css
+      theme:
+        css/editors/image.theme.css: css/quickedit/editors/image.theme.css
 
   settings_tray/drupal.settings_tray:
     css:
@@ -308,8 +308,3 @@ libraries-extend:
     - stable/drupal.user
   tour/tour:
     - stable/tour
-
-# Information added by Drupal.org packaging script on 2022-05-11
-version: '9.3.13'
-project: 'drupal'
-datestamp: 1652261935

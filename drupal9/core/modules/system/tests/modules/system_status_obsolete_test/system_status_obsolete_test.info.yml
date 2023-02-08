@@ -2,11 +2,6 @@ name: 'System obsolete status test'
 type: module
 description: 'Support module for testing an obsolete module extension.'
 package: Testing
-# version: VERSION
+version: VERSION
 lifecycle: obsolete
-lifecycle_link: 'https://i.giphy.com/media/100JPq1ylYXEti/giphy.webp'
-
-# Information added by Drupal.org packaging script on 2022-05-11
-version: '9.3.13'
-project: 'drupal'
-datestamp: 1652261935
+lifecycle_link: 'https://example.com/obsolete'

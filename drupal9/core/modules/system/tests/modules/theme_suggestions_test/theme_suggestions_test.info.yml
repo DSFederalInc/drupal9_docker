@@ -2,9 +2,4 @@ name: 'Theme suggestions test'
 type: module
 description: 'Support module for testing theme suggestions.'
 package: Testing
-# version: VERSION
-
-# Information added by Drupal.org packaging script on 2022-05-11
-version: '9.3.13'
-project: 'drupal'
-datestamp: 1652261935
+version: VERSION

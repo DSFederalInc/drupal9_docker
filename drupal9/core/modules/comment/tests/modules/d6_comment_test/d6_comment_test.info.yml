@@ -2,11 +2,6 @@ name: Drupal 6 comment test
 type: module
 description: Provides a source plugin to test prepareComment deprecation.
 package: Testing
-# version: VERSION
+version: VERSION
 dependencies:
   - drupal:comment
-
-# Information added by Drupal.org packaging script on 2022-05-11
-version: '9.3.13'
-project: 'drupal'
-datestamp: 1652261935

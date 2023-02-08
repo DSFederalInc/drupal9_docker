@@ -2,11 +2,6 @@ name: 'System project namespace'
 type: module
 description: 'Support module for testing project namespace system dependencies.'
 package: Testing
-# version: VERSION
+version: VERSION
 dependencies:
   - drupal:filter
-
-# Information added by Drupal.org packaging script on 2022-05-11
-version: '9.3.13'
-project: 'drupal'
-datestamp: 1652261935

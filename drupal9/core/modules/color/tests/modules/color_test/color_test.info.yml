@@ -2,9 +2,4 @@ name: 'Color test'
 type: module
 description: 'Provides test helpers for color module.'
 package: Testing
-# version: VERSION
-
-# Information added by Drupal.org packaging script on 2022-05-11
-version: '9.3.13'
-project: 'drupal'
-datestamp: 1652261935
+version: VERSION

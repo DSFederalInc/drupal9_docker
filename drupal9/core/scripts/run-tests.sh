@@ -67,7 +67,7 @@ if ($args['list']) {
   echo "\nAvailable test groups & classes\n";
   echo "-------------------------------\n\n";
   $test_discovery = new TestDiscovery(
-    \Drupal::service('app.root'),
+    \Drupal::root(),
     \Drupal::service('class_loader')
   );
   try {
@@ -100,7 +100,7 @@ if ($args['list']) {
 if ($args['list-files'] || $args['list-files-json']) {
   // List all files which could be run as tests.
   $test_discovery = new TestDiscovery(
-    \Drupal::service('app.root'),
+    \Drupal::root(),
     \Drupal::service('class_loader')
   );
   // TestDiscovery::findAllClassFiles() gives us a classmap similar to a
@@ -1024,7 +1024,7 @@ function simpletest_script_get_test_list() {
   global $args;
 
   $test_discovery = new TestDiscovery(
-    \Drupal::service('app.root'),
+    \Drupal::root(),
     \Drupal::service('class_loader')
   );
   $types_processed = empty($args['types']);
@@ -1135,11 +1135,12 @@ function simpletest_script_get_test_list() {
         simpletest_script_print_alternatives($first_group, $all_groups);
         exit(SIMPLETEST_SCRIPT_EXIT_FAILURE);
       }
-      // Ensure our list of tests contains only one entry for each test.
+      // Merge the tests from the groups together.
       foreach ($args['test_names'] as $group_name) {
-        $test_list = array_merge($test_list, array_flip(array_keys($groups[$group_name])));
+        $test_list = array_merge($test_list, array_keys($groups[$group_name]));
       }
-      $test_list = array_flip($test_list);
+      // Ensure our list of tests contains only one entry for each test.
+      $test_list = array_unique($test_list);
     }
   }
 

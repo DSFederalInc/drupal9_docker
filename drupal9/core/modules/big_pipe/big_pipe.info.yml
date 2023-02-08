@@ -2,9 +2,4 @@ name: BigPipe
 type: module
 description: 'Sends pages using the BigPipe technique that allows browsers to show them much faster.'
 package: Core
-# version: VERSION
-
-# Information added by Drupal.org packaging script on 2022-05-11
-version: '9.3.13'
-project: 'drupal'
-datestamp: 1652261935
+version: VERSION

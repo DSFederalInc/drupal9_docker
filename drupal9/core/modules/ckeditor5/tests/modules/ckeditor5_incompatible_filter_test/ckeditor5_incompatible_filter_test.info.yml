@@ -4,8 +4,3 @@ description: "Provides a filter incompatible with CKEditor 5"
 package: Testing
 dependencies:
   - drupal:ckeditor5
-
-# Information added by Drupal.org packaging script on 2022-05-11
-version: '9.3.13'
-project: 'drupal'
-datestamp: 1652261935

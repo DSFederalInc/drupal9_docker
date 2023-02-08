@@ -1,14 +1,13 @@
 name: Standard
 type: profile
 description: 'Install with commonly used features pre-configured.'
-# version: VERSION
+version: VERSION
 install:
   - node
   - history
   - block
   - breakpoint
   - ckeditor
-  - color
   - config
   - comment
   - contextual
@@ -38,10 +37,5 @@ install:
   - tour
   - automated_cron
 themes:
-  - bartik
-  - seven
-
-# Information added by Drupal.org packaging script on 2022-05-11
-version: '9.3.13'
-project: 'drupal'
-datestamp: 1652261935
+  - olivero
+  - claro

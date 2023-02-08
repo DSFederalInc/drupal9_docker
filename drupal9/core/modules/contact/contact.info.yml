@@ -2,10 +2,5 @@ name: Contact
 type: module
 description: 'Provides site-wide contact forms and forms to contact individual users.'
 package: Core
-# version: VERSION
+version: VERSION
 configure: entity.contact_form.collection
-
-# Information added by Drupal.org packaging script on 2022-05-11
-version: '9.3.13'
-project: 'drupal'
-datestamp: 1652261935

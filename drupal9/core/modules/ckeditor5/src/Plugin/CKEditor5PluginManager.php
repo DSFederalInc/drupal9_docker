@@ -8,11 +8,13 @@ use Drupal\ckeditor5\Annotation\CKEditor5Plugin;
 use Drupal\ckeditor5\HTMLRestrictions;
 use Drupal\Component\Annotation\Plugin\Discovery\AnnotationBridgeDecorator;
 use Drupal\Component\Assertion\Inspector;
+use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\Core\Plugin\Discovery\AnnotatedClassDiscovery;
+use Drupal\Core\Plugin\Discovery\ContainerDerivativeDiscoveryDecorator;
 use Drupal\Core\Plugin\Discovery\YamlDiscoveryDecorator;
 use Drupal\editor\EditorInterface;
 use Drupal\filter\FilterPluginCollection;
@@ -61,9 +63,53 @@ class CKEditor5PluginManager extends DefaultPluginManager implements CKEditor5Pl
       // supports top-level properties.
       // @see \Drupal\ckeditor5\Plugin\CKEditor5PluginDefinition::label()
       $discovery = new AnnotationBridgeDecorator($discovery, $this->pluginDefinitionAnnotationName);
+      $discovery = new ContainerDerivativeDiscoveryDecorator($discovery);
       $this->discovery = $discovery;
     }
     return $this->discovery;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function processDefinition(&$definition, $plugin_id) {
+    if (!$definition instanceof CKEditor5PluginDefinition) {
+      throw new InvalidPluginDefinitionException($plugin_id, sprintf('The "%s" CKEditor 5 plugin definition must extend %s', $plugin_id, CKEditor5PluginDefinition::class));
+    }
+
+    // A derived plugin will still have the ID of the derivative, rather than
+    // that of the derived plugin ID (`<base plugin ID>:<derivative ID>`).
+    // Generate an updated CKEditor5PluginDefinition.
+    // @see \Drupal\Component\Plugin\Discovery\DerivativeDiscoveryDecorator::encodePluginId()
+    // @todo Remove this in https://www.drupal.org/project/drupal/issues/2458769.
+    $is_derived = $definition->id() !== $plugin_id;
+    if ($is_derived) {
+      $definition = new CKEditor5PluginDefinition(['id' => $plugin_id] + $definition->toArray());
+    }
+
+    $expected_prefix = sprintf("%s_", $definition->getProvider());
+    $id = $definition->id();
+    if (strpos($id, $expected_prefix) !== 0) {
+      throw new InvalidPluginDefinitionException($id, sprintf('The "%s" CKEditor 5 plugin definition must have a plugin ID that starts with "%s".', $id, $expected_prefix));
+    }
+
+    try {
+      $definition->validateCKEditor5Aspects($id, $definition->toArray());
+      $definition->validateDrupalAspects($id, $definition->toArray());
+    }
+    catch (InvalidPluginDefinitionException $e) {
+      // If this exception is thrown for a derived CKEditor 5 plugin definition,
+      // it means the deriver did not generate a valid plugin definition.
+      // Re-throw the exception, but tweak the language for DX: clarify it is
+      // for a derived plugin definition.
+      if ($is_derived) {
+        throw new InvalidPluginDefinitionException($e->getPluginId(), str_replace('plugin definition', 'derived plugin definition', $e->getMessage()));
+      }
+      // Otherwise, the exception was appropriate: re-throw it.
+      throw $e;
+    }
+
+    parent::processDefinition($definition, $plugin_id);
   }
 
   /**
@@ -298,7 +344,7 @@ class CKEditor5PluginManager extends DefaultPluginManager implements CKEditor5Pl
   /**
    * {@inheritdoc}
    */
-  public function getProvidedElements(array $plugin_ids = [], EditorInterface $editor = NULL, bool $resolve_wildcards = TRUE): array {
+  public function getProvidedElements(array $plugin_ids = [], EditorInterface $editor = NULL, bool $resolve_wildcards = TRUE, bool $creatable_elements_only = FALSE): array {
     $plugins = $this->getDefinitions();
     if (!empty($plugin_ids)) {
       $plugins = array_intersect_key($plugins, array_flip($plugin_ids));
@@ -331,14 +377,46 @@ class CKEditor5PluginManager extends DefaultPluginManager implements CKEditor5Pl
           $subset = $this->getPlugin($id, $editor)->getElementsSubset();
           $subset_restrictions = HTMLRestrictions::fromString(implode($subset));
           $defined_restrictions = HTMLRestrictions::fromString(implode($defined_elements));
-          $subset_violations = $subset_restrictions->diff($defined_restrictions)->toCKEditor5ElementsArray();
-          if (!empty($subset_violations)) {
-            throw new \LogicException(sprintf('The "%s" CKEditor 5 plugin implements ::getElementsSubset() and did not return a subset, the following tags are absent from the plugin definition: "%s".', $id, implode(' ', $subset_violations)));
+          // Determine max supported elements by resolving wildcards in the
+          // restrictions defined by the plugin.
+          $max_supported = $defined_restrictions;
+          if (!$defined_restrictions->getWildcardSubset()->allowsNothing()) {
+            $concrete_tags_to_use_to_resolve_wildcards = $subset_restrictions->extractPlainTagsSubset();
+            $max_supported = $max_supported->merge($concrete_tags_to_use_to_resolve_wildcards)
+              ->diff($concrete_tags_to_use_to_resolve_wildcards);
           }
+          $not_in_max_supported = $subset_restrictions->diff($max_supported);
+          if (!$not_in_max_supported->allowsNothing()) {
+            // If the editor is still being configured, the configuration may
+            // not yet be valid.
+            if ($editor->isNew()) {
+              $subset = [];
+            }
+            else {
+              throw new \LogicException(sprintf('The "%s" CKEditor 5 plugin implements ::getElementsSubset() and did not return a subset, the following tags are absent from the plugin definition: "%s".', $id, implode(' ', $not_in_max_supported->toCKEditor5ElementsArray())));
+            }
+          }
+
+          // Also detect what is technically a valid subset, but has lost the
+          // ability to create tags that are still in the subset. This points to
+          // a bug in the plugin's ::getElementsSubset() logic.
+          $defined_creatable = HTMLRestrictions::fromString(implode($definition->getCreatableElements()));
+          $subset_creatable_actual = HTMLRestrictions::fromString(implode(array_filter($subset, [CKEditor5PluginDefinition::class, 'isCreatableElement'])));
+          $subset_creatable_needed = $subset_restrictions->extractPlainTagsSubset()
+            ->intersect($defined_creatable);
+          $missing_creatable_for_subset = $subset_creatable_needed->diff($subset_creatable_actual);
+          if (!$missing_creatable_for_subset->allowsNothing()) {
+            throw new \LogicException(sprintf('The "%s" CKEditor 5 plugin implements ::getElementsSubset() and did return a subset ("%s") but the following tags can no longer be created: "%s".', $id, implode($subset_restrictions->toCKEditor5ElementsArray()), implode($missing_creatable_for_subset->toCKEditor5ElementsArray())));
+          }
+
           $defined_elements = $subset;
         }
       }
       assert(Inspector::assertAllStrings($defined_elements));
+      if ($creatable_elements_only) {
+        // @see \Drupal\ckeditor5\Plugin\CKEditor5PluginDefinition::getCreatableElements()
+        $defined_elements = array_filter($defined_elements, [CKEditor5PluginDefinition::class, 'isCreatableElement']);
+      }
       foreach ($defined_elements as $element) {
         $additional_elements = HTMLRestrictions::fromString($element);
         $elements = $elements->merge($additional_elements);
@@ -400,10 +478,7 @@ class CKEditor5PluginManager extends DefaultPluginManager implements CKEditor5Pl
 
         case 'imageUploadStatus':
           $image_upload_status = $editor->getImageUploadSettings()['status'] ?? FALSE;
-          if (!$image_upload_status) {
-            return TRUE;
-          }
-          break;
+          return $image_upload_status !== $required_value;
 
         case 'filter':
           $filters = $editor->getFilterFormat()->filters();

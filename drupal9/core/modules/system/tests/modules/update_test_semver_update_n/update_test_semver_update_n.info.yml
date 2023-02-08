@@ -2,10 +2,4 @@ name: 'Update test hook_update_n semver'
 type: module
 description: 'Support module for update testing with core semver value.'
 package: Testing
-# version: VERSION
-core_version_requirement: ^9
-
-# Information added by Drupal.org packaging script on 2022-05-11
-version: '9.3.13'
-project: 'drupal'
-datestamp: 1652261935
+version: VERSION
