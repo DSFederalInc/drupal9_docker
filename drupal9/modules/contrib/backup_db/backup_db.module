@@ -1,0 +1,138 @@
+<?php
+
+/**
+ * @file
+ * backup_db.module
+ */
+
+use Drupal\Core\StreamWrapper\PrivateStream;
+use Drupal\backup_db\Adapter\BackupDatabaseLocalAdapter;
+use Drupal\Core\Database\Database;
+
+/**
+ * Inserts an export entry.
+ *
+ * @param array $file
+ *   The file.
+ *
+ * @return \Drupal\Core\Database\StatementInterface|int|string|null
+ *
+ * @throws \Exception
+ */
+function backup_db_history_insert($file) {
+  $connection = Database::getConnection();
+  return $connection->insert('backup_db')
+    ->fields(['fid', 'name', 'uri', 'created'])
+    ->values([
+      'fid' => $file['fid'],
+      'name' => $file['name'],
+      'uri' => $file['uri'],
+      'created' => \Drupal::time()->getRequestTime(),
+    ])
+    ->execute();
+}
+
+/**
+ * Return export history entry.
+ *
+ * @param int $id
+ *   The entry id.
+ *
+ * @return mixed
+ */
+function backup_db_history_load($id) {
+  $connection = Database::getConnection();
+  return $connection->query('SELECT * FROM {backup_db} WHERE eid = :id', [':id' => $id])
+    ->fetchAll();
+}
+
+/**
+ * Delete history entry.
+ *
+ * @param int $id
+ *   The file id.
+ *
+ * @return bool
+ *   Return the status.
+ *
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function backup_db_history_delete($id) {
+  $status = FALSE;
+
+  // Remove backup_db entry.
+  \Drupal::database()->delete('backup_db')
+    ->condition('fid', $id)
+    ->execute();
+
+  // Remove file and managed entry.
+  $file = \Drupal::entityTypeManager()->getStorage('file')->load($id);
+  if ($file) {
+    $status = $file->delete();
+  }
+
+  return $status;
+}
+
+/**
+ * Return list of all tables.
+ */
+function backup_db_show_tables() {
+  $connection = Database::getConnection();
+  return $connection->query('SHOW TABLES')->fetchAll();
+}
+
+/**
+ * File_create_url in combination with Url::fromUri does not.
+ *
+ * Return a correct path for private files.
+ *
+ * @param string $uri
+ *   The uri.
+ *
+ * @return string
+ *   Return the link.
+ */
+function backup_db_link($uri) {
+  $scheme = \Drupal::service('stream_wrapper_manager')->getScheme($uri);
+  $path = $uri;
+  if ($scheme == 'private') {
+    $private_path = PrivateStream::basePath();
+    $path = str_replace('private:/', $private_path, $uri);
+  }
+  return $path;
+}
+
+/**
+ * Format results as select list options.
+ */
+function _backup_db_format_options($results) {
+  $options = [];
+  foreach ($results as $result) {
+    $value = current((array) $result);
+    $options[$value] = $value;
+  }
+  return $options;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function backup_db_cron() {
+  $config = \Drupal::config('backup_db.settings');
+  if ($config->get('cron_backup_enabled')) {
+    $interval = (int) $config->get('cron_interval') * 60 * 60;
+    $expires = Drupal::state()->get('backup_db.cron_last_run') ?: \Drupal::time()->getRequestTime();
+    $next = Drupal::state()->get('backup_db.cron_next_backup') ?: $expires + $interval;
+    if (\Drupal::time()->getRequestTime() > $next) {
+      $client = \Drupal::service('backup_db.client');
+      // Use the local adapter for cron export.
+      $handler = new BackupDatabaseLocalAdapter($client);
+      $handler->export();
+      \Drupal::state()->set('backup_db.cron_next_backup', \Drupal::time()->getRequestTime() + $interval);
+    }
+    \Drupal::state()->set('backup_db.cron_last_run', \Drupal::time()->getRequestTime());
+  }
+}

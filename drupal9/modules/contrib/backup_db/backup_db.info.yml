@@ -1,0 +1,10 @@
+name: Backup Database
+type: module
+description: 'Provides database backup solutions.'
+package: Development
+core_version_requirement: ^8.8 || ^9
+
+# Information added by Drupal.org packaging script on 2022-04-30
+version: '8.x-2.2'
+project: 'backup_db'
+datestamp: 1651351844

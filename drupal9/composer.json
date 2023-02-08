@@ -16,6 +16,7 @@
     ],
     "require": {
         "composer/installers": "^1.9",
+        "drupal/backup_db": "^2.2",
         "drupal/bootstrap": "^3.25",
         "drupal/core-composer-scaffold": "9.4.11",
         "drupal/core-project-message": "9.4.11",

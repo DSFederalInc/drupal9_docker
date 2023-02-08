@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8.1-apache
 
 # Uncomment this if you're running xdebug
 #  ARG WITH_XDEBUG=false

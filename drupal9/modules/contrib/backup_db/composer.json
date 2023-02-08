@@ -1,0 +1,19 @@
+{
+    "name": "drupal/backup_db",
+    "type": "drupal-module",
+    "description": "Provides database backup solutions via Drupal.",
+    "homepage": "https://drupal.org/project/backup_db",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "George Anderson (geoanders)",
+            "homepage": "https://www.drupal.org/u/geoanders",
+            "role": "Maintainer"
+        }
+    ],
+    "require": {
+        "drupal/core": "^8.8 || ^9",
+        "ifsnop/mysqldump-php": "^2.9"
+    },
+    "minimum-stability": "dev"
+}
