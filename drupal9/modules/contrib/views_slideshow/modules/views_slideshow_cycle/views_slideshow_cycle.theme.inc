@@ -197,7 +197,6 @@ function template_preprocess_views_slideshow_cycle_main_frame_row_item(&$vars) {
 function _views_slideshow_cycle_preprocess_views_slideshow_pager_fields(&$vars) {
   $slide_count = count($vars['view']->result);
   $options = $vars['view']->style_plugin->options['views_slideshow_cycle'];
-  $items_per_slide = $options['items_per_slide'];
 
   if ($vars['settings']['hide_on_single_slide'] && $slide_count == 1) {
     return;

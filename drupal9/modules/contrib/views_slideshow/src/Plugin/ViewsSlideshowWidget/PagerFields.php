@@ -43,12 +43,16 @@ class PagerFields extends ViewsSlideshowWidgetBase {
       '#markup' => '<div class="vs-dependent">',
     ];
 
+    $default_values = $this->getConfiguration()['views_slideshow_pager_fields_fields'];
+    if (isset($default_values['default'])) {
+      $default_values = $default_values['default'];
+    }
     // Add ability to choose which fields to show in the pager.
     $form['views_slideshow_pager_fields_fields'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Pager fields'),
       '#options' => $options,
-      '#default_value' => $this->getConfiguration()['views_slideshow_pager_fields_fields'],
+      '#default_value' => $default_values,
       '#description' => $this->t('Choose the fields that will appear in the pager.'),
       '#states' => [
         'visible' => [

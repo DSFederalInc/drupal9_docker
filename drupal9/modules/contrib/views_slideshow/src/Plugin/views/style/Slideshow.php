@@ -96,7 +96,9 @@ class Slideshow extends StylePluginBase {
       '#markup' => '<h2>' . $this->t('Style') . '</h2>',
     ];
 
-    /* @var \Drupal\Component\Plugin\PluginManagerInterface */
+    /**
+     * @var \Drupal\Component\Plugin\PluginManagerInterface
+     */
     $skinManager = \Drupal::service('plugin.manager.views_slideshow.slideshow_skin');
 
     // Get all skins to create the option list.
@@ -139,7 +141,7 @@ class Slideshow extends StylePluginBase {
         '#default_value' => $this->options['slideshow_type'],
       ];
 
-      // @todo: check if default values are properly passed to the buildConfigurationForm().
+      // @todo check if default values are properly passed to the buildConfigurationForm().
       foreach ($types as $id => $definition) {
         $configuration = [];
         if (!empty($this->options[$id])) {
@@ -169,7 +171,7 @@ class Slideshow extends StylePluginBase {
     }
 
     // Widgets.
-    // @todo: Improve the UX by using Ajax.
+    // @todo Improve the UX by using Ajax.
     $form['widgets_header'] = [
       '#markup' => '<h2>' . $this->t('Widgets') . '</h2>',
     ];
@@ -184,7 +186,9 @@ class Slideshow extends StylePluginBase {
       ];
     }
 
-    /* @var \Drupal\Component\Plugin\PluginManagerInterface */
+    /**
+     * @var \Drupal\Component\Plugin\PluginManagerInterface
+     */
     $widgetTypeManager = \Drupal::service('plugin.manager.views_slideshow.widget_type');
 
     // Get all widgets types that are registered.
@@ -218,7 +222,11 @@ class Slideshow extends StylePluginBase {
               '#type' => 'checkbox',
               '#title' => $widget_info['label'],
               '#default_value' => $this->options['widgets'][$location_id][$widget_id]['enable'],
-              '#description' => $this->t('Should @name be rendered at the @location of the slides.', ['@name' => $widget_info['label'], '@location' => $location_name]),
+              '#description' => $this->t('Should @name be rendered at the @location of the slides.',
+                [
+                  '@name' => $widget_info['label'],
+                  '@location' => $location_name,
+                ]),
               '#dependency' => [
                 'edit-style-options-slideshow-type' => $compatible_slideshows,
               ],

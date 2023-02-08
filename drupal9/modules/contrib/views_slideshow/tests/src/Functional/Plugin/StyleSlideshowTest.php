@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\views_slideshow\Tests\Plugin;
+namespace Drupal\Tests\views_slideshow\Functional\Plugin;
 
 use Drupal\views\Entity\View;
 use Drupal\Tests\views\Functional\ViewTestBase;
@@ -12,6 +12,13 @@ use Drupal\views\Tests\ViewTestData;
  * @group views
  */
 class StyleSlideshowTest extends ViewTestBase {
+
+  /**
+   * Set default theme to stark.
+   *
+   * @var string
+   */
+  protected $defaultTheme = 'stark';
 
   /**
    * Modules to enable.
@@ -36,7 +43,7 @@ class StyleSlideshowTest extends ViewTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp($import_test_views = TRUE) {
+  protected function setUp($import_test_views = TRUE): void {
     parent::setUp();
 
     $this->enableViewsTestModule();
@@ -62,8 +69,8 @@ class StyleSlideshowTest extends ViewTestBase {
     $this->drupalGet('test-style-slideshow');
 
     // Ensure no controls are displayed.
-    $this->assertFalse(count($this->cssSelect('.views-slideshow-controls-top')));
-    $this->assertFalse(count($this->cssSelect('.views-slideshow-controls-bottom')));
+    $this->assertCount(0, $this->cssSelect('.views-slideshow-controls-top'));
+    $this->assertCount(0, $this->cssSelect('.views-slideshow-controls-bottom'));
 
     // Test top widget position.
     $view = View::load('test_style_slideshow');
@@ -81,8 +88,8 @@ class StyleSlideshowTest extends ViewTestBase {
     $view->save();
 
     $this->drupalGet('test-style-slideshow');
-    $this->assertTrue(count($this->cssSelect('.views-slideshow-controls-top')));
-    $this->assertFalse(count($this->cssSelect('.views-slideshow-controls-bottom')));
+    $this->assertCount(1, $this->cssSelect('.views-slideshow-controls-top'));
+    $this->assertCount(0, $this->cssSelect('.views-slideshow-controls-bottom'));
 
     // Test bottom widget position.
     $view = View::load('test_style_slideshow');
@@ -101,8 +108,8 @@ class StyleSlideshowTest extends ViewTestBase {
     $view->save();
 
     $this->drupalGet('test-style-slideshow');
-    $this->assertFalse(count($this->cssSelect('.views-slideshow-controls-top')));
-    $this->assertTrue(count($this->cssSelect('.views-slideshow-controls-bottom')));
+    $this->assertCount(0, $this->cssSelect('.views-slideshow-controls-top'));
+    $this->assertCount(1, $this->cssSelect('.views-slideshow-controls-bottom'));
   }
 
 }

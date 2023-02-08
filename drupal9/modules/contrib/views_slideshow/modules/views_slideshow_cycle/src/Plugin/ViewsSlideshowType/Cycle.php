@@ -535,7 +535,7 @@ class Cycle extends ViewsSlideshowTypeBase {
         '#default_value' => $this->getConfiguration()['advanced_options'],
       ];
 
-      // @todo: Review how to create this table.
+      // @todo Review how to create this table.
       $form['views_slideshow_cycle']['advanced_options_table'] = [
         '#markup' => '<table style="width: 400px; margin-left: 10px;" id="edit-style-options-views-slideshow-cycle-advanced-options-table"></table>',
       ];

@@ -32,7 +32,9 @@ class Controls extends ViewsSlideshowWidgetTypeBase {
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
 
-    /* @var \Drupal\Component\Plugin\PluginManagerInterface */
+    /**
+     * @var \Drupal\Component\Plugin\PluginManagerInterface
+     */
     $widgetManager = \Drupal::service('plugin.manager.views_slideshow.widget');
 
     $widgets = $widgetManager->getDefinitions($this->getPluginId());
