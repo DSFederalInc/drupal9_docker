@@ -1,34 +1,34 @@
-framework:
+global-styling:
+  version: VERSION
+  js:
+    js/global.js: {}
+  css:
+    component:
+      css/style.css: {}
+      css/colors.css: {}
+bootstrap:
+  js:
+    /libraries/popper.js/dist/umd/popper.min.js: { weight: -19 }
+    /libraries/bootstrap/dist/js/bootstrap.min.js: { weight: -20 }
+  css:
+    component:
+      /libraries/bootstrap/dist/css/bootstrap.min.css: {}
+  dependencies:
+    - core/popperjs
+bootstrap_cdn:
+  js:
+    //cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js: {}
+  css:
+    component:
+      //cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css: {}
+  dependencies:
+    - core/popperjs
+color.preview:
+  version: VERSION
   css:
     theme:
-      css/style.css: {}
-
-# Uncomment for LESS source JavaScript files.
-#  js:
-#    bootstrap/js/affix.js: {}
-#    bootstrap/js/alert.js: {}
-#    bootstrap/js/button.js: {}
-#    bootstrap/js/carousel.js: {}
-#    bootstrap/js/collapse.js: {}
-#    bootstrap/js/dropdown.js: {}
-#    bootstrap/js/modal.js: {}
-#    bootstrap/js/tooltip.js: {}
-#    bootstrap/js/popover.js: {}
-#    bootstrap/js/scrollspy.js: {}
-#    bootstrap/js/tab.js: {}
-#    bootstrap/js/transition.js: {}
-
-# Uncomment for SASS source JavaScript files.
-#  js:
-#    bootstrap/assets/javascripts/bootstrap/affix.js: {}
-#    bootstrap/assets/javascripts/bootstrap/alert.js: {}
-#    bootstrap/assets/javascripts/bootstrap/button.js: {}
-#    bootstrap/assets/javascripts/bootstrap/carousel.js: {}
-#    bootstrap/assets/javascripts/bootstrap/collapse.js: {}
-#    bootstrap/assets/javascripts/bootstrap/dropdown.js: {}
-#    bootstrap/assets/javascripts/bootstrap/modal.js: {}
-#    bootstrap/assets/javascripts/bootstrap/tooltip.js: {}
-#    bootstrap/assets/javascripts/bootstrap/popover.js: {}
-#    bootstrap/assets/javascripts/bootstrap/scrollspy.js: {}
-#    bootstrap/assets/javascripts/bootstrap/tab.js: {}
-#    bootstrap/assets/javascripts/bootstrap/transition.js: {}
+      color/preview.css: {}
+  js:
+    color/preview.js: {}
+  dependencies:
+    - color/drupal.color
