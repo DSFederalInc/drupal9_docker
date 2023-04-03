@@ -1,0 +1,22 @@
+global-styling:
+  css:
+    theme:
+      css/ck5style.css: {}
+      css/bootstrap.css: {}
+      css/style.css: {}
+global-scripts:
+  version: VERSION
+  js:
+    js/bootstrap.min.js: {}
+    js/global.js: {}
+    js/popper.min.js: {}
+  dependencies:
+    - core/matchmedia
+    - core/jquery
+    - core/drupal
+    - core/once
+    - core/drupal.debounce
+    - core/collapse
+    - core/jquery
+    - core/jquery.ui.tabs
+    - jquery_ui_tabs/tabs
