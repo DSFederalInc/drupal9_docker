@@ -1,0 +1,83 @@
+{
+  "name": "idea-foundation",
+  "version": "1.0.0",
+  "description": "IDEA Foundation Themes SCSS",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "static:start": "http-server . -a localhost -p 8088",
+    "lint:sass": "sass-lint -c .sass-lint.yml --verbose",
+    "build:sass": "sass scss/style.scss css/style.css && sass scss/ck5style.scss css/ck5style.css",
+    "build:js": "cross-env BABEL_ENV=legacy node ./bin/babel/babel-es6-build.js",
+    "lint:js": "eslint --no-eslintrc -c=./.eslintrc.json js/**.es6.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "babel-plugin-add-header-comment": "^1.0.3",
+    "cross-env": "^7.0.2",
+    "eslint": "^8.37.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jquery": "^1.5.1",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.10.0",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "eslint-plugin-yml": "^0.10.0",
+    "glob": "^7.1.2",
+    "http-server": "^14.0.0",
+    "sass": "^1.59.3",
+    "sass-lint": "^1.13.1"
+  },
+  "babel": {
+    "env": {
+      "development": {
+        "presets": [
+          [
+            "env",
+            {
+              "modules": "commonjs",
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ]
+      },
+      "legacy": {
+        "presets": [
+          [
+            "env",
+            {
+              "modules": false
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@popperjs/core": "^2.11.7",
+    "autoprefixer": "^10.4.14",
+    "awesome4-iconpicker": "^1.1.1",
+    "bootstrap": "^4.6.0",
+    "browser-sync": "^2.29.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "flatted": "^3.2.7",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-load-plugins": "^2.0.8",
+    "gulp-postcss": "^9.0.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "postcss-cli": "^10.1.0",
+    "postcss-inline-svg": "^6.0.0",
+    "postcss-pxtorem": "^6.0.0"
+  }
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--Boostrap layout-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
+    <!--font-awesome-4-->
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--iconpicker css-->
+    <link rel="stylesheet" href="dist/awesome4-iconpicker.min.css">
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <!--iconpicker js-->
+    <script src="js/awesome4-iconpicker.js"></script>
+</head>
+<body>
+    <!--Your HTML TAG-->
+    <div class="container" style="margin-top:100px;">
+        <h3> base </h3>
+        <div class="input-group">
+            <input type="text" class="form-control demo1">
+        </div>
+    </div>
+
+    <div class="container" style="margin-top:100px;">
+        <h3> selected </h3>
+        <div class="input-group">
+            <input type="text" class="form-control demo2" data-iconname='book'>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top:100px;">
+        <h3> outputType </h3>
+        <div class="input-group">
+            <input type="text" class="form-control demo3">
+        </div>
+    </div>
+
+    <script>
+        // Your js
+        $('.demo1').iconpicker();
+        $('.demo2').iconpicker();
+        $('.demo3').iconpicker({ "outputType": "html" });
+    </script>
+</body>
+</html>
