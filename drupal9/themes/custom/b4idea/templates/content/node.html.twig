@@ -80,7 +80,7 @@
 {{ attach_library('bootstrap4/node') }}
 <article{{ attributes.addClass(classes) }}>
 
-  {{ title_prefix }}
+  {# {{ title_prefix }}
   {% if label and not page %}
     <h2{{ title_attributes }}>
       <a href="{{ url }}" rel="bookmark">{{ label }}</a>
@@ -96,7 +96,7 @@
         {{ metadata }}
       </div>
     </footer>
-  {% endif %}
+  {% endif %} #}
 
   <div{{ content_attributes.addClass('node__content') }}>
     {{ content }}
