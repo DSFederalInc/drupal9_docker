@@ -23,6 +23,7 @@
         "drupal/core-project-message": "9.4.11",
         "drupal/core-recommended": "9.4.11",
         "drupal/core-vendor-hardening": "^9.3",
+        "drupal/devel": "^5.0",
         "drupal/views_slideshow": "^4.8",
         "drupal/webform": "^6.2@beta",
         "drush/drush": "^11.0"
