@@ -1,5 +1,33 @@
 .jumbotron{
     margin-bottom: 2rem;
-    background-color: #e9ecef;
-    border-radius: 0.3rem;
+    position: relative;
+    overflow: hidden;
+    background: url(/sites/default/files/images/hero.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+}
+
+.hero-content{
+    max-width: 50%;
+    padding: 4rem 2rem;
+    color: #fff;
+    p{
+        margin-bottom: 2.5rem;
+
+    }
+    a{
+        text-decoration: none;
+        text-align: center;
+
+    }
+    .btn-primary{
+        padding: 16px 30px;
+        border-radius: 6px;
+        border-width: 2px solid #FDB819;
+        background-color: #FDB819;
+        transition: color 0.2s ease 0s, background-color 0.2s ease 0s, box-shadow 0.2s ease 0s;
+
+    }
 }

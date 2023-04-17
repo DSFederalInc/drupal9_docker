@@ -1,9 +1,4 @@
 .paragraph--type--bp-carousel {
-    // width: 100%;
-    // height: 100vh;
-    // img{
-    //     object-fit: cover;
-    // }
     margin-bottom: 2rem;
     @media (min-width: 768px) { margin-bottom: 20px; }
     @media (min-width: 576px) { margin-bottom: 0; }
@@ -15,6 +10,5 @@
     }
     .carousel-item{
         height: 32rem;
-    }
-    
+    }    
 }
