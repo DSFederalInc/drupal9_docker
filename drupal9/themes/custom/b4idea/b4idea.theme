@@ -4,3 +4,33 @@
  * @file
  * B4 Idea theme file.
  */
+
+
+/**
+ * Implements hook_preprocess_HOOK().
+ * 'HOOK' is the name of the template being preprocessed.
+
+ */
+
+function mytheme_preprocess_node(&$variables) {
+  // Add a custom class to the node template.
+  $variables['classes_array'][] = 'mytheme-node';
+
+  // Customize the node template based on the content type.
+  if ($variables['node']->getType() == 'article') {
+    // Add an extra field to the article template.
+    $variables['extra_field'] = 'This is an extra field for articles.';
+  }
+}
+
+
+/**
+ * Implements hook_preprocess_paragraph().
+ */
+function radix_paragraphs_preprocess_paragraph__card_deck(&$variables) {
+  // Add .card-deck class.
+  // https://getbootstrap.com/docs/4.4/components/card/#card-decks
+  $variables['attributes']['class'][] = 'card-deck';
+}
+
+

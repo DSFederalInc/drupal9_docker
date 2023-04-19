@@ -3,6 +3,7 @@ global-styling:
     theme:
       css/ck5style.css: {}
       css/bootstrap.css: {}
+      css/bootstrap.min.css: {}
       css/style.css: {}
 global-scripts:
   version: VERSION

@@ -1,0 +1,21 @@
+
+
+.paragraph--type--bp-card{
+    &.card--large-top {
+        .card-image{
+        text-align: center;
+            h2 {
+                display: inline-block;
+                .field--type-image {
+                    max-width: 80px;
+                }
+            }
+        }
+        .field--name-bp-card-title {
+            font-weight: bold;
+            line-height: 1.3rem;
+            font-size:$h4-font-size;
+        }
+    }
+    
+}
