@@ -1,7 +1,44 @@
-{# BEGIN OUPUT from modules/contrib/bootstrap_paragraphs/modules/bp_quicklinks/templates/paragraph--bp-quicklinks.html.twig #}
+{#
+/**
+ * @file
+ * Bootstrap Paragraphs template for displaying a Carousel.
+ *
+ * Available variables:
+ * - paragraph: Full paragraph entity.
+ *   - id: The paragraph ID.
+ *   - bundle: The type of the paragraph, for example, "image" or "text".
+ *   - authorid: The user ID of the paragraph author.
+ *   - createdtime: Formatted creation date. Preprocess functions can
+ *     reformat it by calling format_date() with the desired parameters on
+ *     $variables['paragraph']->getCreatedTime().
+ * - content: All paragraph items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - paragraphs: The current template type (also known as a "theming hook").
+ *   - paragraphs--type-[type]: The current paragraphs type. For example, if the paragraph is an
+ *     "Image" it would result in "paragraphs--type--image". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - paragraphs--view-mode--[view_mode]: The View Mode of the paragraph; for example, a
+ *     preview would result in: "paragraphs--view-mode--preview", and
+ *     default: "paragraphs--view-mode--default".
+ * - view_mode: View mode; for example, "preview" or "full".
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
 
 {{ attach_library('bootstrap_paragraphs/bootstrap-paragraphs') }}
-{{ attach_library('bp_quicklinks/bp-quicklinks') }}
+{{ attach_library('bootstrap_paragraphs/bp-carousel') }}
 
 {# Renders Width field. #}
 {# Sets class name from values in database. #}
@@ -25,7 +62,7 @@
     'paragraph--color paragraph--color--rgba-black-slight' == layout_background ? 'paragraph--color paragraph--color--rgba-black-slight',
     'paragraph--color paragraph--color--rgba-black-light' == layout_background ? 'paragraph--color paragraph--color--rgba-black-light',
     'paragraph--color paragraph--color--rgba-black-strong' == layout_background ? 'paragraph--color paragraph--color--rgba-black-strong',
-    'paragraph--color paragraph--color--rgba-blue-slight' == layout_background ? 'paragraph--color paragraph--color--rgba-black-strong',
+    'paragraph--color paragraph--color--rgba-blue-slight' == layout_background ? 'paragraph--color paragraph--color--rgba-blue-slight',
     'paragraph--color paragraph--color--rgba-blue-light' == layout_background ? 'paragraph--color paragraph--color--rgba-blue-light',
     'paragraph--color paragraph--color--rgba-blue-strong' == layout_background ? 'paragraph--color paragraph--color--rgba-blue-strong',
     'paragraph--color paragraph--color--rgba-bluegrey-slight' == layout_background ? 'paragraph--color paragraph--color--rgba-bluegrey-slight',
@@ -84,12 +121,33 @@
   %}
 {% endif %}
 
+{# Renders Slide Interval field. #}
+{# Converts database values to classes supplied by template. #}
+{% if content.bp_slide_interval|render %}
+  {% set slide_interval = content.bp_slide_interval['#items'].getString() %}
+  {% set slide_interval_classes = [
+    'false' == slide_interval ? 'false',
+    '1000' == slide_interval ? '1000',
+    '2000' == slide_interval ? '2000',
+    '3000' == slide_interval ? '3000',
+    '4000' == slide_interval ? '4000',
+    '5000' == slide_interval ? '5000',
+    '6000' == slide_interval ? '6000',
+    '7000' == slide_interval ? '7000',
+  ]
+  %}
+{% endif %}
+
 {# The template default set classes. #}
+{# Sets Paragraph ID as class. #}
 {%
 set classes = [
 'paragraph',
 'paragraph--type--' ~ paragraph.bundle|clean_class,
 view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+'paragraph--id--' ~ paragraph.id.value,
+'carousel',
+'slide',
 ]
 %}
 
@@ -105,23 +163,30 @@ view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
   {% set classes = classes|merge(layout_background_classes) %}
 {% endif %}
 
-{# Sets Unique ID for Accordion from Paragraph ID. #}
-{% set paragraph_id = 'quicklinks-' ~ paragraph.id.value %}
+{# Sets Unique ID for Carousel from Paragraph ID. #}
+{% set paragraph_id = 'myCarousel-' ~ paragraph.id.value %}
 
-{# Prints Quicklinks template. #}
-<div{{ attributes.addClass(classes) }}>
-  <div class="paragraph__column">
-    {# Sets Header field. #}
-    {% if content.bp_header|render %}
-      <h2>{{ content.bp_header }}</h2>
-    {% endif %}
-    <ul class="quicklinks {{ paragraph_id }}">
-      {% for key, item in content.bp_quick_link if key|first != '#' %}
-        <li class="quicklink quicklink-{{ key + 1 }}">
-          {{ item }}
-          
-        </li>
-      {% endfor %}
-    </ul>
+{# Prints Carousel template. #}
+{{ content|without('bp_slide_content','bp_slide_interval', 'bp_width', 'bp_background') }}
+<div{{ attributes.addClass(classes).setAttribute('id', paragraph_id).setAttribute('data-interval', slide_interval_classes).setAttribute('data-ride', 'carousel') }}>
+  <ol class="carousel-indicators">
+    {% for key, item in content.bp_slide_content if key|first != '#' %}
+      <li class="{% if loop.first %}active{% endif %}" data-slide-to="{{ key }}" data-target="#{{ paragraph_id }}"></li>
+    {% endfor %}
+  </ol>
+  <div class="carousel-inner" role="list">
+    {% for key, item in content.bp_slide_content if key|first != '#' %}
+      <div class="paragraph--layout-slideshow__slide-{{ key + 1 }} item carousel-item{% if loop.first %} active{% endif %}" role="listitem">{{ item }}</div>
+    {% endfor %}
   </div>
+  <a class="left carousel-control" href="#{{ paragraph_id }}" role="button" data-slide="prev">
+    {# <i class="bi bi-chevron-left"></i> #}
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#{{ paragraph_id }}" role="button" data-slide="next">
+    {# <i class="bi bi-chevron-right"></i> #}
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
 </div>
