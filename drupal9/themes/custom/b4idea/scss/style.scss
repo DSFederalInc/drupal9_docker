@@ -6,10 +6,11 @@ Description: Bootstrap 4 with Sass
 // import files
 @import "general";
 @import "layout";
-@import "components/cards";
-@import "components/header";
-@import "components/carousel";
+@import "components/_cards";
+@import "components/_header";
+@import "components/_carousel";
 @import "components/_features";
 @import "components/_top_title";
-@import "components/hero";
-@import "components/blog";
+@import "components/_hero";
+@import "components/_blog";
+@import "components/_column";

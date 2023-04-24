@@ -1,7 +1,16 @@
 .paragraph--type--bp-block {
     align-items: center;
     text-align: center;
-    padding-top: 80px;
+    padding-top: 3.5rem;
+
+    @media (max-width: 991px){
+        padding-top: 2rem;
+       
+    }
+    @media (max-width: 575px){
+        padding-top: 1.5rem;
+       
+    }
 
     h2 {
         position: relative;

@@ -9,9 +9,7 @@
 /**
  * Implements hook_preprocess_HOOK().
  * 'HOOK' is the name of the template being preprocessed.
-
  */
-
 function mytheme_preprocess_node(&$variables) {
   // Add a custom class to the node template.
   $variables['classes_array'][] = 'mytheme-node';
@@ -32,5 +30,26 @@ function radix_paragraphs_preprocess_paragraph__card_deck(&$variables) {
   // https://getbootstrap.com/docs/4.4/components/card/#card-decks
   $variables['attributes']['class'][] = 'card-deck';
 }
+
+/**
+ * Implements Hero Section
+ */
+function THEMENAME_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  // Block suggestions for custom block bundles.
+  if (isset($variables['elements']['content']['#block_content'])) {
+    array_splice($suggestions, 1, 0, 'block__bundle__' . $variables['elements']['content']['#block_content']->bundle());
+  }
+}
+
+
+/**
+ * Implements CSS to Read More and Comments Links
+ */
+function mytheme_theme_preprocess_links(&$variables) {
+  if (!empty($variables['links']['node-readmore']['link'])) {
+    $variables['links']['node-readmore']['link']['#options']['attributes']['class'][] = 'my-button-class1 my-button-class2';
+  }
+}
+
 
 
