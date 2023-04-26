@@ -1,10 +1,9 @@
-.view-our-blog {
+.paragraph--type--bp-view  {
     .node--view-mode-teaser{
         width:100%;
         background: #fff;
         border: 1px solid #cacaca;
         border-radius: 10px;
-        margin: 20px;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
         overflow: hidden;
         @media (max-width: 767.98px){ width: auto; }

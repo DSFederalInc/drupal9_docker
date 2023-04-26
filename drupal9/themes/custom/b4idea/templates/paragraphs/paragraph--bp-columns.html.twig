@@ -1,7 +1,8 @@
-{# BEGIN OUPUT from modules/contrib/bootstrap_paragraphs/modules/bp_quicklinks/templates/paragraph--bp-quicklinks.html.twig #}
 
 {{ attach_library('bootstrap_paragraphs/bootstrap-paragraphs') }}
-{{ attach_library('bp_quicklinks/bp-quicklinks') }}
+{% if paragraph.bundle == 'bp_columns' %}
+  {{ attach_library('bootstrap_paragraphs/bp-columns') }}
+{% endif %}
 
 {# Renders Width field. #}
 {# Sets class name from values in database. #}
@@ -25,7 +26,7 @@
     'paragraph--color paragraph--color--rgba-black-slight' == layout_background ? 'paragraph--color paragraph--color--rgba-black-slight',
     'paragraph--color paragraph--color--rgba-black-light' == layout_background ? 'paragraph--color paragraph--color--rgba-black-light',
     'paragraph--color paragraph--color--rgba-black-strong' == layout_background ? 'paragraph--color paragraph--color--rgba-black-strong',
-    'paragraph--color paragraph--color--rgba-blue-slight' == layout_background ? 'paragraph--color paragraph--color--rgba-black-strong',
+    'paragraph--color paragraph--color--rgba-blue-slight' == layout_background ? 'paragraph--color paragraph--color--rgba-blue-slight',
     'paragraph--color paragraph--color--rgba-blue-light' == layout_background ? 'paragraph--color paragraph--color--rgba-blue-light',
     'paragraph--color paragraph--color--rgba-blue-strong' == layout_background ? 'paragraph--color paragraph--color--rgba-blue-strong',
     'paragraph--color paragraph--color--rgba-bluegrey-slight' == layout_background ? 'paragraph--color paragraph--color--rgba-bluegrey-slight',
@@ -85,11 +86,13 @@
 {% endif %}
 
 {# The template default set classes. #}
+{# Sets Paragraph ID as class. #}
 {%
 set classes = [
 'paragraph',
 'paragraph--type--' ~ paragraph.bundle|clean_class,
 view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+'paragraph--id--' ~ paragraph.id.value,
 ]
 %}
 
@@ -105,24 +108,12 @@ view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
   {% set classes = classes|merge(layout_background_classes) %}
 {% endif %}
 
-{# Sets Unique ID for Accordion from Paragraph ID. #}
-{% set paragraph_id = 'quicklinks-' ~ paragraph.id.value %}
-
-{# Prints Quicklinks template. #}
+{# Prints div with classes, and content without Width and Background. #}
 <div{{ attributes.addClass(classes) }}>
   <div class="paragraph__column">
-    {# Sets Header field. #}
     {% if content.bp_header|render %}
       <h2>{{ content.bp_header }}</h2>
     {% endif %}
-    <ul class="quicklinks {{ paragraph_id }}">
-      {% for key, item in content.bp_quick_link if key|first != '#' %}
-        <li class="quicklink quicklink-{{ key + 1 }}">
-          {{ item }}
-          <i class="bi bi-arrow-right"></i>
-          
-        </li>
-      {% endfor %}
-    </ul>
+    {{ content|without('bp_background', 'bp_header', 'bp_width') }}
   </div>
 </div>

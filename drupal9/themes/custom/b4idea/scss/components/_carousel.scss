@@ -10,26 +10,50 @@
     }
     .carousel-item{
         height: 42rem;
-        @media (max-width: 767.98px){ height: auto; }
+        @media (max-width: 991px) { height: auto; }
         
-        a.left.carousel-control{
+    }
+    .carousel-control{
+        position: absolute;
+        display: flex;
+        top: 0;
+        bottom: 0;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        width: 10%;
+        z-index: 1;
+        // color: $ideas-gray-darker;
+        color:$ideas-gray-darker;        
+    
+        .bi-arrow-left-circle-fill, .bi-arrow-right-circle-fill{
+            font-size: 52px;
             position: absolute;
-            top: 0;
-            bottom: 0;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            text-align: center;
-            width: 15%;
-            height: 100%;
+            display: inline-block;
+            
+        }
+        
+    }
+    .left{
+        left: 20px;
+        &:hover{   
+            background: linear-gradient(to left, rgb(255 255 255 / 0%), rgba(26, 26, 26, 0.937254902));
             color: #fff;
-            border: 0;
-            background: none;
-            padding: 20px;
-            opacity: .5;
-            transition: opacity .15s ease;
-
+            
+    
         }
     }
+    .right{
+        right: 20px;
+        &:hover{   
+            background: linear-gradient(to right, rgb(255 255 255 / 0%), rgba(26, 26, 26, 0.937254902));
+            color: #fff;
+            
+    
+        }
+    }
+    
+    
 }
+
+

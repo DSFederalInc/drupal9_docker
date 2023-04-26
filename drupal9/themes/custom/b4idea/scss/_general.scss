@@ -79,7 +79,8 @@ img{
 }
 
 .quicklinks{
-    justify-content: flex-end;
+    justify-content: center;
+    margin: 20px 0;
     .quicklink{
         margin: 0;
         padding: 0;
@@ -90,11 +91,15 @@ img{
             // border-radius: 10px;
             // border: 2px solid $ideas-yellow;
             &:hover{
-                color: #fff;
-                background: $ideas-caption-blue;
+                color: $ideas-caption-blue;
+                background: none;
                 text-decoration: none;
             }
         }
+        .bi.bi-arrow-right{
+            color: $ideas-caption-blue;
+        }
+
         
     }
 }

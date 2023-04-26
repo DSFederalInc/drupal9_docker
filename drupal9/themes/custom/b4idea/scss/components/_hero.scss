@@ -2,21 +2,22 @@
     // margin-bottom: 2rem;
     position: relative;
     overflow: hidden;
-    // background: url(/sites/default/files/2023-04/hero.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    height: 600px;
+    height: 650px;
     border-radius: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     @media (max-width: 767.98px){
         height: 350px;
        
     }
 
-
     .hero-content{
         position: relative;
-        max-width: 50%;
+        max-width: 60%;
         padding: 4rem 2rem;
         color: #fff;
         @media (max-width: 767.98px){
@@ -34,7 +35,8 @@
         a{
             display: inline-block;
             text-decoration: none;
-            text-align: center;
+            text-align: center;    
+            font-weight: bold;
     
         }
     }
