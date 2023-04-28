@@ -109,11 +109,12 @@ view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
 {% endif %}
 
 {# Prints div with classes, and content without Width and Background. #}
-<div{{ attributes.addClass(classes) }}>
-  <div class="paragraph__column">
-    {% if content.bp_header|render %}
-      <h2>{{ content.bp_header }}</h2>
-    {% endif %}
-    {{ content|without('bp_background', 'bp_header', 'bp_width') }}
+{# <div{{ attributes.addClass(classes) }}> #}
+<div class="container">
+  <div class="row">
+      {% if content.bp_header|render %}
+        <h2>{{ content.bp_header }}</h2>
+      {% endif %}
+      {{ content|without('bp_background', 'bp_header', 'bp_width') }}
   </div>
 </div>

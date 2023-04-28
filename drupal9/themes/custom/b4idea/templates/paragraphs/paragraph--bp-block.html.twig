@@ -127,7 +127,6 @@
 {# Sets Paragraph ID as class. #}
 {%
 set classes = [
-'paragraph',
 'paragraph--type--' ~ paragraph.bundle|clean_class,
 view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
 'paragraph--id--' ~ paragraph.id.value,
@@ -147,8 +146,8 @@ view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
 {% endif %}
 
 {# Prints div with classes, and content without Width and Background. #}
-<div{{ attributes.addClass(classes) }}>
-  <div class="paragraph__column">
+<div class="container">
+  <div class="top-block">
     {% if content.bp_header|render %}
       <h2>{{ content.bp_header }}</h2>
     {% endif %}

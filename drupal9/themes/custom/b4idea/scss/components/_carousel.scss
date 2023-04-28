@@ -1,7 +1,7 @@
 .paragraph--type--bp-carousel {
     margin-bottom: 2rem;
-    @media (min-width: 768px) { margin-bottom: 20px; }
-    @media (min-width: 576px) { margin-bottom: 0; }
+    @media (max-width: 767.98px) { margin-bottom: 20px; }
+    // @media (max-width: 575px) { margin-bottom: 0; }
 
     .carousel-inner{
         position: relative;
@@ -10,7 +10,7 @@
     }
     .carousel-item{
         height: 42rem;
-        @media (max-width: 991px) { height: auto; }
+        @media (max-width: 767.98px) { height: auto; }
         
     }
     .carousel-control{
@@ -30,6 +30,7 @@
             font-size: 52px;
             position: absolute;
             display: inline-block;
+            @media (max-width: 767.98px) { font-size: 32px; }
             
         }
         

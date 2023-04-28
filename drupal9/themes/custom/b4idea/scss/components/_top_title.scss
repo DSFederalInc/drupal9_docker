@@ -1,10 +1,10 @@
-.paragraph--type--bp-block {
+.top-block {
     align-items: center;
     text-align: center;
-    padding-top: 3.5rem;
+    padding: 5rem 0 3rem 0;
 
     @media (max-width: 991px){
-        padding-top: 2rem;
+        padding: 2rem 0;
        
     }
     @media (max-width: 575px){

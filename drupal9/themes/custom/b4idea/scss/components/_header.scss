@@ -15,13 +15,25 @@ header{
             height: 80px;
         }
     }
-    .menu--main li a{
-        color: $ideas-violet;
-        &:active, &:hover, &:visited {
-        color: #9608a9;
-        border-bottom: 2px solid #9608a9;
+    // .menu--main li a{
+    //     color: $ideas-gray-darker;
+    //     &:active, &:hover, &:visited {
+    //     color: $ideas-violet;
+    //     border-bottom: 2px solid $ideas-violet;
+    //     }
+    // }
+    .navbar-nav .nav-item {
+
+        .nav-link {
+            color: $ideas-gray-darker;
+        }
+        .nav-link:hover,.nav-link:active,.nav-link:visited{
+            color: $ideas-violet;
+            border-bottom: 2px solid $ideas-violet;
+
         }
     }
+    
     
     #navbarSupportedContent{
         justify-content: end;

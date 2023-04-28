@@ -108,16 +108,9 @@ view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
 {% endif %}
 
 {# Prints div with classes, and content without Width and Background. #}
-<div class="container-fluid">
-  {% if content.field_background_image %}
-  <div class="jumbotron" style="background-image: url({{ file_url(content.field_background_image['#items'].entity.uri.value) }});">
-        <div class="hero-content">
-          {% if content.bp_text %}
-            {{ content.bp_text }}
-          {% endif %}
-        </div>
-  </div>
-  {% endif %}
+<div class="container">
+    {% if content.bp_header|render %}
+      <h2>{{ content.bp_header }}</h2>
+    {% endif %}
+    {{ content|without('bp_background', 'bp_header', 'bp_width') }}
 </div>
-
-
