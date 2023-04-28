@@ -14,10 +14,13 @@
 
     .blog-title{
         height: 5.5rem;
-        line-height: 1.2;
-        font-size: 1.5rem;
         font-weight: bold;
         padding: 15px;
+        // display: -webkit-box;
+        // -webkit-line-clamp: 2;
+        // -webkit-box-orient: vertical;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
     }
     .blog-body{
         padding: 15px;
@@ -54,3 +57,14 @@
         margin-left: 4px;
     }
 }
+
+nav.pager {
+    display: flex;
+    justify-content: center;
+    margin-top: 6rem;
+    align-items: center;
+    .page-link{
+        color: $ideas-violet;
+    }
+}
+
