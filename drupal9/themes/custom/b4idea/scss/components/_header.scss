@@ -1,9 +1,33 @@
 header{
     
-    .navbar-sticky{
-        position: relative;
+    #navbar {
         background-color: #FFF;
         box-shadow: 0px 2px 12px 0px rgb(0 0 0 / 10%);
+        overflow: hidden;
+        
+        &.sticky {
+          position: fixed;
+          top: 0;
+          width: 100%;
+        }
+        .nav-menu ul.navbar-nav {
+            flex-direction: row;
+            li {
+
+                a{
+                    color: $ideas-violet;
+                    padding: 10px 20px;
+                    &:active, &:hover, &:visited {
+                    color: #9608a9;
+                    border-bottom: 2px solid #9608a9;
+                    }
+                }
+            }   
+        }
+        
+        #navbarSupportedContent{
+            justify-content: center;
+        }
     }
     .navbar-brand {
         .site-logo {
@@ -14,27 +38,20 @@ header{
         img{
             height: 80px;
         }
-    }
-    .menu--main li a{
-        color: $ideas-violet;
-        &:active, &:hover, &:visited {
-        color: #9608a9;
-        border-bottom: 2px solid #9608a9;
-        }
-    }
-    
-    #navbarSupportedContent{
-        justify-content: end;
-    }
-
+    }  
 }
 
 
 
-// .main-header{
-//     height: 300px;
-//     background: url(images/hero.png) no-repeat center center;
-// }
+
+  
+  /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+  .sticky + main {
+    padding-top: 60px;
+  }
+
+
+
 
 
     
