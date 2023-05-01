@@ -1,2 +1,7 @@
-drupal9/sites/default/filesdrupal9/sites/default/files//
 drupal9/themes/custom/ideafoundation/node_modules//
+drupal9/themes/custom/b4idea/node_modules//
+db-data/
+drupal9/modules//
+drupal9/sites/default//
+drupal9/vendor//
+php74apache/sqldump//

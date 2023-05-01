@@ -67,7 +67,6 @@
     "awesome4-iconpicker": "^1.1.1",
     "bootstrap": "^4.6.0",
     "browser-sync": "^2.29.1",
-    "eslint-config-airbnb-base": "^15.0.0",
     "flatted": "^3.2.7",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
@@ -76,8 +75,12 @@
     "gulp-rename": "^2.0.0",
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^3.0.0",
+    "postcss": "^8.4.21",
     "postcss-cli": "^10.1.0",
     "postcss-inline-svg": "^6.0.0",
     "postcss-pxtorem": "^6.0.0"
+  },
+  "overrides": {
+    "graceful-fs": "^4.2.10"
   }
 }
