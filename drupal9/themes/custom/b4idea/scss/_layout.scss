@@ -1,1 +1,36 @@
+.container{
+    .row{
+        display:flex;
+        justify-content: space-between;
+        align-content: center;
+        flex-wrap:wrap;
+        .paragraph--type--bp-columns__2col{
+            max-width: 50%;
+            @media (max-width: 767.98px){
+                max-width: 100%;
+                padding: 0;
+            }          
+        }
+        .paragraph--type--bp-columns__3col{
+            max-width:33.33%;
+            @media (max-width: 767.98px){
+                max-width: 100%;
+                padding: 0;
+            }
+            
+        }
+        > div {
+            align-self: center;
+            flex-grow: 1;
+            display: inline-block;
+            position: relative;
+            @media (max-width: 767.98px){
+                max-width: 100%;
+                padding: 0;
+            }
+        }
 
+
+        
+    }
+}
