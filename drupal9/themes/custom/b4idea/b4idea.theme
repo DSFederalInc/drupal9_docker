@@ -23,7 +23,7 @@ function mytheme_preprocess_node(&$variables) {
 
 
 /**
- * Implements hook_preprocess_paragraph().
+ * Implements card Deck
  */
 function radix_paragraphs_preprocess_paragraph__card_deck(&$variables) {
   // Add .card-deck class.
@@ -41,13 +41,33 @@ function THEMENAME_theme_suggestions_block_alter(array &$suggestions, array $var
   }
 }
 
+/**
+ * Implements hook_preprocess_node()
+ */
+// function b4idea_preprocess_node(&$variables) {
+//   $variables['title'] = '<div class="title-wrapper">' . $variables['title'] . '</div>';
+//   $variables['content']['body'][0]['#markup'] = '<div class="body-wrapper">' . $variables['content']['body'][0]['#markup'] . '</div>';
+// }
+
 
 /**
  * Implements CSS to Read More and Comments Links
  */
-function mytheme_theme_preprocess_links(&$variables) {
+function b4idea_preprocess_links(&$variables) {
   if (!empty($variables['links']['node-readmore']['link'])) {
     $variables['links']['node-readmore']['link']['#options']['attributes']['class'][] = 'my-button-class1 my-button-class2';
+  }
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function b4idea_preprocess_node(&$variables) {
+  if ($variables['node']->getType() == 'blog') {
+    $variables['content']['title']['#prefix'] = '<div class="title-wrapper">';
+    $variables['content']['title']['#suffix'] = '</div>';
+    $variables['content']['body']['#prefix'] = '<div class="body-wrapper">';
+    $variables['content']['body']['#suffix'] = '</div>';
   }
 }
 

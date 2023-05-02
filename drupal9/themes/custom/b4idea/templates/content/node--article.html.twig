@@ -35,14 +35,7 @@
     </footer>
   {% endif %}
 
-  <div class="blog-post">
-    {% if content.field_image %}
-      <div class="blog-image">{{ content.field_image }}</div>
-    {% endif %}
-    <div class="blog-content">
-      <h2>{{ content.title }}</h2>
-      {{ content.body }}
-    </div>
+  <div{{ content_attributes.addClass('node__content','article-post') }}>
+      {{ content }}
   </div>
-
 </article>

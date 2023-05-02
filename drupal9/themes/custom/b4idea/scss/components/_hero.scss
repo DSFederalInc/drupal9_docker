@@ -1,5 +1,4 @@
 .jumbotron{
-    // margin-bottom: 2rem;
     position: relative;
     overflow: hidden;
     background-repeat: no-repeat;
@@ -8,8 +7,8 @@
     height: 650px;
     border-radius: 0;
     display: flex;
-    // justify-content: center;
     align-items: center;
+    margin-bottom: 0;
     @media (max-width: 767.98px){
         height: 350px;
        
