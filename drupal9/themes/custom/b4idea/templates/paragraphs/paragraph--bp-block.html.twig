@@ -147,10 +147,10 @@ view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
 
 {# Prints div with classes, and content without Width and Background. #}
 <div class="container">
-  <div class="top-block">
-    {% if content.bp_header|render %}
+  {% if content.bp_header|render %}
+    <div class="top-block">
       <h2>{{ content.bp_header }}</h2>
-    {% endif %}
-    {{ content|without('bp_background', 'bp_header', 'bp_width') }}
-  </div>
+    </div>
+  {% endif %}
+  {{ content|without('bp_background', 'bp_header', 'bp_width') }}
 </div>
