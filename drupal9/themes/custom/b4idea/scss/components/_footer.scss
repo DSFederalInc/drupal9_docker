@@ -14,7 +14,7 @@ footer {
        > div {
             flex: 1;
             width: 33%;
-            &#block-logo {
+            &#block-footerlogo {
                 .footer-logo {
                   max-width: 210px;
                 }
@@ -51,7 +51,7 @@ footer {
         > div {
             width: 100%;
             flex: none ;
-            #block-logo {
+            #block-footerlogo {
                 .footer-logo {
                     display: block;
                     margin-left: auto;
@@ -65,7 +65,7 @@ footer {
             }
         }
     }
-       > #block-footer-links {
+       > #block-footer-links-menu {
             flex: 1;
             width: 33%;
             padding: 0 0 0 10rem;
