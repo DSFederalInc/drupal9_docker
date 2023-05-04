@@ -1,6 +1,6 @@
 .paragraph--type--bp-carousel {
     margin-bottom: 2rem;
-    @media (max-width: 767.98px) { margin-bottom: 20px; }
+    @media (max-width: 991px) { margin-bottom: 20px; }
     // @media (max-width: 575px) { margin-bottom: 0; }
 
     .carousel-inner{
@@ -9,8 +9,8 @@
         object-fit: cover;
     }
     .carousel-item{
-        height: auto;
-        @media (max-width: 767.98px) { height: auto; }
+        height: 42rem;
+        @media (max-width: 991px) { height: auto; }
         
     }
     .carousel-control{

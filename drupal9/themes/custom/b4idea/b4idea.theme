@@ -72,4 +72,33 @@ function b4idea_preprocess_node(&$variables) {
 }
 
 
+/**
+ * A snippet to wrap the title, author, and date fields in a div element:
+ */
+// function b4idea_preprocess_field(&$variables) {
+//   // Check if this is the correct view mode.
+//   if ($variables['element']['#view_mode'] === 'full') {
+//     // Check if this is the correct entity type and bundle.
+//     if ($variables['element']['#entity_type'] === 'node' && $variables['element']['#bundle'] === 'article') {
+//       // Check if the current field is one of the fields we want to wrap.
+//       if (in_array($variables['element']['#field_name'], ['field_author', 'field_date'])) {
+//         // Wrap the field in a new div element.
+//         $variables['label_hidden'] = TRUE; // Hide the field label.
+//         $variables['classes_array'][] = 'article-field-wrapper'; // Add a new class to the field.
+//         $variables['label_attributes']['class'][] = 'visually-hidden'; // Hide the field label from screen readers.
+//       }
+//     }
+//   }
+// }
+
+
+function b4idea_preprocess_field(&$variables) {
+  $element = $variables['element'];
+
+  // Wrap author and date fields in a custom div
+  if (($element['#field_name'] == 'field_author') || ($element['#field_name'] == 'field_date')) {
+    $variables['theme_hook_suggestions'][] = 'field__custom_field_wrap';
+    $variables['classes_array'][] = 'custom-field-wrap';
+  }
+}
 
