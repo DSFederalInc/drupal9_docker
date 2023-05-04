@@ -56,32 +56,22 @@ set footer_classes = ' ' ~
   (b4_footer_bg_schema != 'none' ? " bg-#{b4_footer_bg_schema}" : ' ')
 %}
 
-<header>
+<header id="header">
   {{ page.header }}  
+ {% if page.nav_branding or page.nav_main %}  
+    <div class="container">
+    
+        <div class="header-logo col-12">{{ page.nav_branding }}</div>
 
-  {% if page.nav_branding or page.nav_main or page.nav_additional %}  
-  <nav class="{{ nav_classes }}">
-    <div class="{{ b4_top_container }} row mx-auto">
-      <div class="col-auto p-0">
-      {{ page.nav_branding }}  
-      </div>
-
-      <div class="">
-          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-                  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                  aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-      </div>
-
-      <div class="collapse navbar-collapse col-12 col-md-auto p-0 justify-content-center" id="navbarSupportedContent">
-        {{ page.nav_main }}      
-        {{ page.nav_additional }}      
-      </div>
+        <nav id="navbar" class="col-12"> 
+          <div class="nav-menu" id="navbarSupportedContent">
+            {{ page.nav_main }}      
+          </div>
+        </nav>
+     
     </div>
-  </nav>
-  {% endif %}
-
+    {% endif %}
+  </div>
 </header>
 
 <main role="main">
@@ -125,9 +115,10 @@ set footer_classes = ' ' ~
 </main>
 
 {% if page.footer %}
-<footer class="mt-auto {{ footer_classes }}">
-  <div class="{{ b4_top_container }}">
+<footer class="container-fluid">
+  <div class="container footer-content">
     {{ page.footer }}
   </div>
+  <div class='copyright'>©{{ "now"|date("Y") }} by DSFederal-IDEA Foundation</div>
 </footer>
 {% endif %}

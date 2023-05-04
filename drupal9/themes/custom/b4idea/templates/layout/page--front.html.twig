@@ -58,10 +58,6 @@
     </div>
     {% endif %}
   </div>
-
-      
-
-
 </header>
 
 <main role="main">
@@ -82,10 +78,10 @@
 </main>
 
 {% if page.footer %}
-<footer class="mt-auto {{ footer_classes }}">
-  <div class="{{ b4_top_container }}">
+<footer class="container-fluid">
+  <div class="container footer-content">
     {{ page.footer }}
   </div>
+  <div class='copyright'>©{{ "now"|date("Y") }} by DSFederal-IDEA Foundation</div>
 </footer>
 {% endif %}
-
